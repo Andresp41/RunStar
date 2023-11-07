@@ -48,17 +48,23 @@ highscore = 0
 
 # File operations for high score
 def save_highscore(highscore):
-    with open('highscore.txt', 'w') as file:
+    highscore_dir = os.path.join(os.path.expanduser('~'), '.runstar_game')
+    if not os.path.exists(highscore_dir):
+        os.makedirs(highscore_dir)
+    highscore_file_path = os.path.join(highscore_dir, 'highscore.txt')
+    with open(highscore_file_path, 'w') as file:
         file.write(str(int(highscore)))
 
 def load_highscore():
-    if os.path.exists('highscore.txt'):
-        with open('highscore.txt', 'r') as file:
+    highscore_dir = os.path.join(os.path.expanduser('~'), '.runstar_game')
+    highscore_file_path = os.path.join(highscore_dir, 'highscore.txt')
+    if os.path.exists(highscore_file_path):
+        with open(highscore_file_path, 'r') as file:
             try:
                 return int(file.read())
             except ValueError:
-            
                 return 0
+    return 0
 
 # Load the high score at the start
 highscore = load_highscore()
@@ -175,4 +181,3 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
-
